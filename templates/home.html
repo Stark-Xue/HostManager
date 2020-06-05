@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <style>
+        .hide{
+            display:none;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.6;
+            background-color: gray;
+            z-index: 9;
+        }
+        .modal{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 100px;
+            width: 160px;
+            margin-left: -200px;
+            margin-top: -200px;
+            background-color: #red;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<form action="/home" method="post">
+    <input type="text" placeholder="请输入主机IP" name="ip" />
+    <input type="text" placeholder="请输入主机名" name="hostname" />
+    <input type="text" placeholder="请输入主机状态" name="status" />
+    <input type="text" placeholder="是否启动" name="flags" />
+    <input type="text" placeholder="描述" name="description" />
+    <input type="submit" value="添加" />
+</form>
+<table border="1px solid red">
+    <tr>
+        <td>id</td>
+        <td>ip</td>
+        <td>hostname</td>
+        <td>操作</td>
+    </tr>
+    {% for host in hosts %}
+        <tr>
+            <td>{{host.id}}</td>
+            <td>{{host.ip}}</td>
+            <td>{{host.hostname}}</td>
+            <td><a href="/detail?nid={{host.id}}">查看详细</a> |
+                <a href="#" class="del" row-id="{{host.id}}">删除</a></td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="shadow hide" id="del_shadow"></div>
+<div style="background-color:gray;width:160px;" id="delete_modal" class="modal hide">
+    <form action="/delete" method="post">
+        <h3>你确定要删除吗？</h3>
+        <input type="text" style="display:none;" name="nid" id="nid"/>
+        <input type="submit" value="sure" />
+        <input type="button" value="cancel" class="cancel"/>
+    </form>
+</div>
+<script src="/static/jquery-1.12.4.js"> </script>
+<script>
+    $('.del').click(function(){
+        $('#delete_modal').removeClass('hide');
+        $('#del_shadow').removeClass('hide');
+        var row_id = $(this).attr("row-id");
+        $('#nid').val(row_id);
+    });
+
+    $('.cancel').click(function(){
+        $('#delete_modal').addClass('hide');
+        $('#del_shadow').addClass('hide');
+    });
+</script>
+</body>
+</html>

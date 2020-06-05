@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <style>
+        label{
+            width: 80px;
+            text-align: right;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form action="/login" method="post">
+        <div>
+            <label>用户名：</label>
+            <input name="usr" type="text" placeholder="请输入用户名" />
+        </div>
+        <div>
+            <label>密码：</label>
+            <input name="pwd" type="password" placeholder="请输入密码" />
+        </div>
+        <input type="submit" value="登录" />
+    </form>
+</div>
+</body>
+</html>
